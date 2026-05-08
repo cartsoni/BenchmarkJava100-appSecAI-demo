@@ -1,14 +1,15 @@
-name: AppSecAI Scan
+name: Security Scan
 on:
   workflow_dispatch:
   jobs:
-    security-scan:
+    scan:
         runs-on: ubuntu-latest
-            permissions:
-                  contents: read
-                      steps:
-                            - uses: actions/checkout@v4
-                                  - name: Run AppSecAI
-                                          uses: appsecai-vulnerability-analysis/github-action@v1
+            steps:
+                  - uses: actions/checkout@v4
+                        - uses: returntocorp/semgrep-action@v1
+                                with:
+                                          generateSarif: true
                                                   continue-on-error: true
-                                                  
+                                                        - uses: appsecai-vulnerability-analysis/github-action@v1
+                                                                continue-on-error: true
+                                                                
