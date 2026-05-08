@@ -11,48 +11,42 @@ on:
                 # Continue even if scan finds vulnerabilities
                     continue-on-error: true
 
-                            permissions:
-                                  contents: read
-                                        pull-requests: write
-                                              issues: write
+                        permissions:
+                              contents: read
+                                    pull-requests: write
+                                          issues: write
 
-                                                      steps:
-                                                            - name: Checkout code
-                                                                    uses: actions/checkout@v4
-                                                                            with:
-                                                                                      fetch-depth: 0
+                                              steps:
+                                                    - name: Checkout code
+                                                            uses: actions/checkout@v4
+                                                                    with:
+                                                                              fetch-depth: 0
 
-                                                                                                  - name: Run AppSecAI Security Scan
-                                                                                                          uses: appsecai-vulnerability-analysis/github-action@v1
-                                                                                                                  id: appsecai
-                                                                                                                          with:
-                                                                                                                                    # Scan the entire repository
-                                                                                                                                              scan-path: ./
-                                                                                                                                                        # Create up to 3 fix pull requests
-                                                                                                                                                                  number-of-pr: 3
-                                                                                                                                                                            # Add labels to created issues/PRs
-                                                                                                                                                                                      issue-labels: 'appSecAI-finding,security'
-                                                                                                                                                                                                # Add pull request labels
-                                                                                                                                                                                                          pr-labels: 'appSecAI-finding,security,auto-generated'
-                                                                                                                                                                                                                    # Create comments on pull requests with findings
-                                                                                                                                                                                                                              create-pr-comments: true
-                                                                                                                                                                                                                                        # Allow scanning to continue even if vulnerabilities are found
-                                                                                                                                                                                                                                                  fail-on-severity: none
-                                                                                                                                                                                                                                                          continue-on-error: true
-                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                      - name: Summary
-                                                                                                                                                                                                                                                                              if: always()
-                                                                                                                                                                                                                                                                                      run: |
-                                                                                                                                                                                                                                                                                                echo "=== AppSecAI Scan Results ==="
-                                                                                                                                                                                                                                                                                                          echo "Scan Status: Complete"
-                                                                                                                                                                                                                                                                                                                    echo "Check the Actions tab for detailed results."
-                                                                                                                                                                                                                                                                                                                              echo "Any created PRs and issues will be labeled with 'appSecAI-finding' for easy tracking."
-                                                                                                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                                                                                          - name: Report Success
-                                                                                                                                                                                                                                                                                                                                                  if: success()
-                                                                                                                                                                                                                                                                                                                                                          run: echo "✅ AppSecAI scan completed successfully"
-                                                                                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                      - name: Report Completion
-                                                                                                                                                                                                                                                                                                                                                                              if: always()
-                                                                                                                                                                                                                                                                                                                                                                                      run: echo "✅ Workflow completed (no errors - continue-on-error enabled)"
-                                                                                                                                                                                                                                                                                                                                                                                      
+                                                                                    - name: Run AppSecAI Security Scan
+                                                                                            uses: appsecai-vulnerability-analysis/github-action@v1
+                                                                                                    id: appsecai
+                                                                                                            with:
+                                                                                                                      scan-path: ./
+                                                                                                                                number-of-pr: 3
+                                                                                                                                          issue-labels: 'appSecAI-finding,security'
+                                                                                                                                                    pr-labels: 'appSecAI-finding,security,auto-generated'
+                                                                                                                                                              create-pr-comments: true
+                                                                                                                                                                        fail-on-severity: none
+                                                                                                                                                                                continue-on-error: true
+                                                                                                                                                                                
+                                                                                                                                                                                      - name: Summary
+                                                                                                                                                                                              if: always()
+                                                                                                                                                                                                      run: |
+                                                                                                                                                                                                                echo "=== AppSecAI Scan Results ==="
+                                                                                                                                                                                                                          echo "Scan Status: Complete"
+                                                                                                                                                                                                                                    echo "Check the Actions tab for detailed results."
+                                                                                                                                                                                                                                              echo "Any created PRs and issues will be labeled with 'appSecAI-finding' for easy tracking."
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                    - name: Report Success
+                                                                                                                                                                                                                                                            if: success()
+                                                                                                                                                                                                                                                                    run: echo "AppSecAI scan completed successfully"
+                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                          - name: Report Completion
+                                                                                                                                                                                                                                                                                  if: always()
+                                                                                                                                                                                                                                                                                          run: echo "Workflow completed"
+                                                                                                                                                                                                                                                                                          
