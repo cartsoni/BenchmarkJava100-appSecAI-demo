@@ -1,0 +1,22 @@
+# BACKUP: Original AppSecAI workflow file from 4 months ago
+# This is a backup of the original .github/workflows/appsecai_scan_triage_fix.yml
+# The original file has been moved here for reference
+# See .github/workflows/ for the active workflow configuration
+
+name: Scan Triage and Remediation (BACKUP)
+permissions:
+  contents: read
+    id-token: write
+    on:
+      workflow_dispatch:
+      jobs:
+        triageAndRemediation:
+            runs-on: ubuntu-latest
+                steps:
+                      - name: Checkout repository
+                              uses: actions/checkout@v4
+                                    - name: AppSecAI
+                                            uses: AppSecureAI/automation-action@v1
+                                                    with:
+                                                              file: semgrep-results.sarif
+                                                              
